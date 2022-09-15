@@ -1,0 +1,79 @@
+﻿@model ML.Aseguradora
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Aseguradora</h2>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-3">
+        @Html.ActionLink(" ", "Form", "Aseguradora", htmlAttributes: new { @class = "btn btn-success bi bi-plus-square" })
+    </div>
+</div>
+
+
+<div class="row" style="padding-top:30px">
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <tr>
+                <th class="text-center" scope="col">
+                    Editar
+                </th>
+                <th class="d-none" scope="col">
+                    IdAseguradora
+                </th>
+                <th class="text-center" scope="col">
+                    Nombre
+                </th>
+                <th class="text-center" scope="col">
+                    Fecha de Creacion
+                </th>
+                <th class="text-center" scope="col">
+                    Fecha de Modificacion
+                </th>
+                <th class="d-none" scope="col">
+                    IdUsuario
+                </th>
+                <th class="text-center" scope="col">
+                    Usuario
+                </th>
+                <th class="text-center" scope="col">
+                    Eliminar
+                </th>
+            </tr>
+            @foreach (ML.Aseguradora aseguradora in Model.Aseguradoras)
+            {
+                <tr>
+                    <td class="text-center">
+                        <a class="btn btn-warning bi bi-pencil" href="@Url.Action("Form", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora})"></a>
+                    </td>
+                    <td class="d-none">
+                        @aseguradora.IdAseguradora
+                    </td>
+                    <td class="text-center">
+                        @aseguradora.Nombre
+                    </td>
+                    <td class="text-center">
+                        @*@aseguradora.FechaCreacion*@
+                        @Convert.ToDateTime(aseguradora.FechaCreacion).ToString("dd-MM-yyyy")
+                    </td>
+                    <td class="text-center">
+                        @*@aseguradora.FechaModificacion*@
+                        @Convert.ToDateTime(aseguradora.FechaModificacion).ToString("dd-MM-yyyy")
+                    </td>
+                    <td class="d-none">
+                        @aseguradora.Usuario.IdUsuario
+                    </td>
+                    <td class="text-center">
+                        @aseguradora.Usuario.Nombre @aseguradora.Usuario.ApellidoPaterno @aseguradora.Usuario.ApellidoMaterno
+                    </td>
+                    <th class="text-center">
+                        <a class="btn btn-danger bi bi-trash" href="@Url.Action("Delete", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora })" onclick="return confirm('¿Estas seguro que deseas eliminar este registro?');"></a>
+                    </th>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

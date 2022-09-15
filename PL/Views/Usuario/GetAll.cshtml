@@ -1,0 +1,189 @@
+﻿@model ML.Usuario
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Usuario</h2>
+@*
+<h6>Buscar un Usuario:</h6>*@
+<hr/>
+<div class="row">
+
+        <div class="form-inline">
+
+            @using (Html.BeginForm("GetAll", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="form-inline">
+                        <div class="col-md-3">
+
+                            @Html.LabelFor(model => model.Nombre)
+
+                            @Html.TextBoxFor(model => model.Nombre, new { @placeholder = "Nombre Ej: Juan", @class = "form-control" } )
+                           
+                        </div>
+
+                        <div class="col-md-3">
+
+                            @Html.LabelFor(model => model.ApellidoPaterno)
+
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @placeholder = "Apellido Ej: Hernandez", @class = "form-control" } )
+
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            @Html.LabelFor(model => model.ApellidoMaterno)
+
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @placeholder = "Apellido Ej: López", @class = "form-control" })
+
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <input type="submit" value="Buscar" class="btn btn-success" />
+
+                           @* @Html.ActionLink("Regresar", "GetAll", "Usuario", htmlAttributes: new { @class = "btn btn-danger" })
+*@
+                        </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+<hr/>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-3">
+        @Html.ActionLink(" ", "Form", "Usuario", htmlAttributes: new { @class = "btn btn-success bi bi-person-plus" })
+    </div>
+</div>
+
+
+
+<div class="row" style="padding-top:30px">
+    <div class="col-md-12 justify-content-center">
+        <table class="table table-hover">
+            <tr>
+                <th class="text-center" scope="col">
+                    Editar
+                </th>
+                <th class="d-none" scope="col">
+                    IdUsuario
+                </th>
+                <th class="text-center" scope="col">
+                    UserName
+                </th>
+                <th class="text-center" scope="col">
+                    Nombre Completo
+                </th>
+                <th class="text-center" scope="col">
+                    Email
+                </th>
+                <th class="text-center" scope="col">
+                    Password
+                </th>
+                <th class="text-center" scope="col">
+                    Fecha de Nacimiento
+                </th>
+                <th class="text-center" scope="col">
+                    Sexo
+                </th>
+                <th class="text-center" scope="col">
+                    Telefono
+                </th>
+                <th class="text-center" scope="col">
+                    Celular
+                </th>
+                <th class="text-center" scope="col">
+                    CURP
+                </th>
+                <th class="d-none" scope="col">
+                    IdRol
+                </th>
+                <th class="text-center" scope="col">
+                    Rol
+                </th>
+                <th class="text-center" scope="col">
+                    Imagen
+                </th>
+                <th class="text-center" scope="col">
+                    Direccion
+                </th>
+                <th class="text-center" scope="col">
+                    Eliminar
+                </th>
+            </tr>
+            @foreach (ML.Usuario usuario in Model.Usuarios)
+            {
+                <tr>
+                    <td class="text-center">
+                        <a class="btn btn-warning bi bi-pencil" href="@Url.Action("Form", "Usuario", new { IdUsuario = usuario.IdUsuario})"></a>
+                    </td>
+                    <td class="d-none">
+                        @usuario.IdUsuario
+                    </td>
+                    <td class="text-center">
+                        @usuario.UserName
+                    </td>
+                    <td class="text-center">
+                        @usuario.Nombre  @usuario.ApellidoPaterno @usuario.ApellidoMaterno
+                    </td>
+                    <td class="text-center">
+                        @usuario.Email
+                    </td>
+                    <td class="text-center">
+                        @usuario.Password
+                    </td>
+                    <td class="text-center">
+                        @*@usuario.FechaNacimiento*@
+                        @Convert.ToDateTime(usuario.FechaNacimiento).ToString("dd-MM-yyyy")
+                    </td>
+                    <td class="text-center">
+                        @usuario.Sexo
+                    </td>
+                    <td class="text-center">
+                        @usuario.Telefono
+                    </td>
+                    <td class="text-center">
+                        @usuario.Celular
+                    </td>
+                    <td class="text-center">
+                        @usuario.CURP
+                    </td>
+                    <td class="d-none">
+                        @usuario.Rol.IdRol
+                    </td>
+                    <td class="text-center">
+                        @usuario.Rol.Nombre
+                    </td>
+                    <td class="text-center">
+
+                        @if (usuario.Imagen == null)
+                        {
+                            <img src="~/Imagenes/userdefault.png" style="width:65px; height:55px" />
+                        }
+                        else
+                        {
+                            <img src="data:image/*;base64,@usuario.Imagen" style="width:65px; height:55px" />
+                        }
+                    </td>
+                    <td class="text-center">
+                        @usuario.Direccion.Calle @usuario.Direccion.NumeroInterior @usuario.Direccion.NumeroExterior @usuario.Direccion.Colonia.Nombre @usuario.Direccion.Colonia.CodigoPostal @usuario.Direccion.Colonia.Municipio.Nombre @usuario.Direccion.Colonia.Municipio.Estado.Nombre @usuario.Direccion.Colonia.Municipio.Estado.Pais.Nombre
+                    </td>
+                    <th class="text-center">
+                        <a class="btn btn-danger bi bi-trash" href="@Url.Action("Delete", "Usuario", new { IdUsuario = usuario.IdUsuario })" onclick="return confirm('¿Estas seguro que deseas eliminar este registro?');"></a>
+                    </th>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

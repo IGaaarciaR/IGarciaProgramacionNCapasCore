@@ -1,0 +1,104 @@
+﻿@model ML.Empleado
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Empleado Dependiente</h2>
+
+
+<div class="row" style="padding-top:30px">
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <tr>
+                <th class="text-center" scope="col">
+                    Seleccionar
+                </th>
+                <th class="text-center" scope="col">
+                    Numero de Empleado
+                </th>
+                <th class="text-center" scope="col">
+                    RFC
+                </th>
+                <th class="text-center" scope="col">
+                    Nombre Completo
+                </th>
+                <th class="text-center" scope="col">
+                    Email
+                </th>
+                <th class="text-center" scope="col">
+                    Telefono
+                </th>
+                <th class="text-center" scope="col">
+                    Fecha de Nacimiento
+                </th>
+                <th class="text-center" scope="col">
+                    NSS
+                </th>
+                <th class="text-center" scope="col">
+                    Fecha de Ingreso
+                </th>
+                <th class="text-center" scope="col">
+                    Foto
+                </th>
+                <th class="d-none" scope="col">
+                    IdEmpresa
+                </th>
+                <th class="text-center" scope="col">
+                    Empresa
+                </th>
+            </tr>
+            @foreach (ML.Empleado empleado in Model.Empleados)
+            {
+                <tr>
+                    <td class="text-center">
+                        <a class="btn btn-warning bi bi-check2-square" href="@Url.Action("GetByIdEmpleado", "EmpleadoDependiente", new { NumeroEmpleado = empleado.NumeroEmpleado})"></a>
+                    </td>
+                    <td class="text-center">
+                        @empleado.NumeroEmpleado
+                    </td>
+                    <td class="text-center">
+                        @empleado.RFC
+                    </td>
+                    <td class="text-center">
+                        @empleado.Nombre  @empleado.ApellidoPaterno @empleado.ApellidoMaterno
+                    </td>
+                    <td class="text-center">
+                        @empleado.Email
+                    </td>
+                    <td class="text-center">
+                        @empleado.Telefono
+                    </td>
+                    <td class="text-center">
+                        @*@aseguradora.FechaCreacion*@
+                        @Convert.ToDateTime(empleado.FechaNacimiento).ToString("dd-MM-yyyy")
+                    </td>
+                    <td class="text-center">
+                        @empleado.NSS
+                    </td>
+                    <td class="text-center">
+                        @*@aseguradora.FechaModificacion*@
+                        @Convert.ToDateTime(empleado.FechaIngreso).ToString("dd-MM-yyyy")
+                    </td>
+                    <td class="text-center">
+
+                        @if (String.IsNullOrEmpty(empleado.Foto))
+                        {
+                            <img src="~/Imagenes/SinFoto.png" style="width:65px; height:55px" />
+                        }
+                        else
+                        {
+                            <img src="data:image/*;base64,@empleado.Foto" style="width:65px; height:55px" />
+                        }
+                    </td>
+                    <td class="d-none">
+                        @empleado.Empresa.IdEmpresa
+                    </td>
+                    <td class="text-center">
+                        @empleado.Empresa.Nombre
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

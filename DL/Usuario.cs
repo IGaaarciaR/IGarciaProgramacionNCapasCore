@@ -25,12 +25,14 @@ namespace DL
         public string? Curp { get; set; }
         public byte? IdRol { get; set; }
         public string? Imagen { get; set; }
-
-        
+        public bool? Status { get; set; }
 
         public virtual Rol? IdRolNavigation { get; set; }
         public virtual ICollection<Aseguradora> Aseguradoras { get; set; }
         public virtual ICollection<Direccion> Direccions { get; set; }
+
+
+        public string NombreCompleto { get; set; }
 
         //referencias Rol
         public string Rol { get; set; }
@@ -51,7 +53,7 @@ namespace DL
 
         //Referencias Municipio
         public int IdMunicipio { get; set; }
-        public string MunicipioNombre { get; set; } 
+        public string MunicipioNombre { get; set; }
 
         //Referencias Estado
         public int IdEstado { get; set; }
@@ -61,6 +63,6 @@ namespace DL
         public int IdPais { get; set; }
         public string PaisNombre { get; set; }
 
-        public string NombreCompleto { get; set; }
+
     }
 }

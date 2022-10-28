@@ -27,9 +27,11 @@ namespace BL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
             }
 
             return result;
@@ -54,11 +56,12 @@ namespace BL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
             }
-
             return result;
         }
 
@@ -69,7 +72,7 @@ namespace BL
             {
                 using (DL.IGarciaProgramacionNCapasContext context = new DL.IGarciaProgramacionNCapasContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"UsuarioDelete {aseguradora.IdAseguradora}");
+                    var query = context.Database.ExecuteSqlRaw($"AseguradoraDelete {aseguradora.IdAseguradora}");
                     if (query > 0)
                     {
                         result.Correct = true;
@@ -80,9 +83,11 @@ namespace BL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
             }
 
             return result;
@@ -134,9 +139,11 @@ namespace BL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
             }
 
             return result;
@@ -176,9 +183,11 @@ namespace BL
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
             }
 
             return result;

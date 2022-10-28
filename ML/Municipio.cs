@@ -8,9 +8,9 @@ namespace ML
 {
     public class Municipio
     {
-        public int IdMunicipio { get; set; }
-        public string Nombre { get; set; }
+        public int? IdMunicipio { get; set; }
+        public string? Nombre { get; set; }
         public ML.Estado Estado { get; set; } //acceder a pais
-        public List<object> Municipios { get; set; }
+        public List<object>? Municipios { get; set; }
     }
 }

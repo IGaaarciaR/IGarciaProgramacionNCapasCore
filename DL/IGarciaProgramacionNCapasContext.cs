@@ -18,6 +18,8 @@ namespace DL
 
         public virtual DbSet<Aseguradora> Aseguradoras { get; set; } = null!;
         public virtual DbSet<Colonium> Colonia { get; set; } = null!;
+        public virtual DbSet<Dependiente> Dependientes { get; set; } = null!;
+        public virtual DbSet<DependienteTipo> DependienteTipos { get; set; } = null!;
         public virtual DbSet<Direccion> Direccions { get; set; } = null!;
         public virtual DbSet<Empleado> Empleados { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
@@ -31,7 +33,7 @@ namespace DL
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=LAPTOP-GE66920J; Database= IGarciaProgramacionNCapas; Trusted_Connection=True; User ID=sa; Password=pass@word1;");
             }
         }
@@ -76,6 +78,73 @@ namespace DL
                     .WithMany(p => p.Colonia)
                     .HasForeignKey(d => d.IdMunicipio)
                     .HasConstraintName("FK__Colonia__IdMunic__5629CD9C");
+            });
+
+            modelBuilder.Entity<Dependiente>(entity =>
+            {
+                entity.HasKey(e => e.IdDependiente)
+                    .HasName("PK__Dependie__366D0771CE482195");
+
+                entity.ToTable("Dependiente");
+
+                entity.Property(e => e.ApellidoMaterno)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApellidoPaterno)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EstadoCivil)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.Genero)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NumeroEmpleado)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Rfc)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("RFC");
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdDependienteTipoNavigation)
+                    .WithMany(p => p.Dependientes)
+                    .HasForeignKey(d => d.IdDependienteTipo)
+                    .HasConstraintName("FK__Dependien__IdDep__0B91BA14");
+
+                entity.HasOne(d => d.NumeroEmpleadoNavigation)
+                    .WithMany(p => p.Dependientes)
+                    .HasForeignKey(d => d.NumeroEmpleado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("NumeroEmpleado");
+            });
+
+            modelBuilder.Entity<DependienteTipo>(entity =>
+            {
+                entity.HasKey(e => e.IdDependienteTipo)
+                    .HasName("PK__Dependie__2C220C6200E46DB7");
+
+                entity.ToTable("DependienteTipo");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Direccion>(entity =>
@@ -135,6 +204,8 @@ namespace DL
 
                 entity.Property(e => e.FechaNacimiento).HasColumnType("date");
 
+                entity.Property(e => e.Foto).IsUnicode(false);
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -173,6 +244,8 @@ namespace DL
                 entity.Property(e => e.Email)
                     .HasMaxLength(254)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Logo).IsUnicode(false);
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
@@ -247,6 +320,9 @@ namespace DL
                     .HasName("PK__Usuario__5B65BF97B9E1FE70");
 
                 entity.ToTable("Usuario");
+
+                entity.HasIndex(e => new { e.IdUsuario, e.Email }, "UQ_ConstraintEmail")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.UserName, "UQ__Usuario__C9F284562EC0B306")
                     .IsUnique();

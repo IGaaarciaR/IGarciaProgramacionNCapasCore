@@ -1,0 +1,6 @@
+No se insertó el Usuario con nombre: Luisa   Error: Violation of UNIQUE KEY constraint 'UQ__Usuario__C9F284562EC0B306'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (Luisabicha).
+The statement has been terminated.
+No se insertó el Usuario con nombre: Yak Balam   Error: Violation of UNIQUE KEY constraint 'UQ__Usuario__C9F284562EC0B306'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (Balam12).
+The statement has been terminated.
+No se insertó el Usuario con nombre: José Luis   Error: Violation of UNIQUE KEY constraint 'UQ__Usuario__C9F284562EC0B306'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (luis2314).
+The statement has been terminated.

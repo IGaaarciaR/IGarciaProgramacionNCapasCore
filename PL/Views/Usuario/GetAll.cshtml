@@ -10,12 +10,11 @@
 <hr/>
 <div class="row">
 
-        <div class="form-inline">
-
             @using (Html.BeginForm("GetAll", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
 
-                <div class="form-inline">
+                <div class="row">
+                        <h5>Busqueda de un usuario: </h5>
                         <div class="col-md-3">
 
                             @Html.LabelFor(model => model.Nombre)
@@ -28,7 +27,7 @@
 
                             @Html.LabelFor(model => model.ApellidoPaterno)
 
-                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @placeholder = "Apellido Ej: Hernandez", @class = "form-control" } )
+                            @Html.TextBoxFor(model => model.ApellidoPaterno, new { @placeholder = "Apellido Ej: Hernandez", @class = "form-control" } )
 
 
                         </div>
@@ -37,7 +36,7 @@
 
                             @Html.LabelFor(model => model.ApellidoMaterno)
 
-                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @placeholder = "Apellido Ej: López", @class = "form-control" })
+                            @Html.TextBoxFor(model => model.ApellidoMaterno, new { @placeholder = "Apellido Ej: López", @class = "form-control" })
 
 
                         </div>
@@ -54,16 +53,15 @@
 
             }
 
-        </div>
-
     </div>
 
 <hr/>
 
 
 <div class="row">
-    <div class="col-md-12 col-sm-3">
-        @Html.ActionLink(" ", "Form", "Usuario", htmlAttributes: new { @class = "btn btn-success bi bi-person-plus" })
+    <div class="col-md-3">
+        <h6>Agrega un usuario:  </h6>
+        @Html.ActionLink("    ", "Form", "Usuario", htmlAttributes: new { @class = "btn btn-success bi bi-person-plus" })
     </div>
 </div>
 
@@ -114,6 +112,9 @@
                 </th>
                 <th class="text-center" scope="col">
                     Imagen
+                </th>
+                <th class="text-center" scope="col">
+                    Estatus
                 </th>
                 <th class="text-center" scope="col">
                     Direccion
@@ -167,7 +168,7 @@
                     </td>
                     <td class="text-center">
 
-                        @if (usuario.Imagen == null)
+                        @if (String.IsNullOrEmpty(usuario.Imagen))
                         {
                             <img src="~/Imagenes/userdefault.png" style="width:65px; height:55px" />
                         }
@@ -176,6 +177,16 @@
                             <img src="data:image/*;base64,@usuario.Imagen" style="width:65px; height:55px" />
                         }
                     </td>
+
+                    @if (usuario.Status)
+                    {
+                        <td><a href="@Url.Action("UpdateStatus", "Usuario", new { IdUsuario = usuario.IdUsuario})"><img src="~/Imagenes/ON.png" style="width:80px; height:40px" /></a></td>
+                    }
+                    else
+                    {
+                        <td><a href="@Url.Action("UpdateStatus", "Usuario", new { IdUsuario = usuario.IdUsuario})"><img src="~/Imagenes/OFF.png" style="width:75px; height:35px" /></a></td>
+                    }
+                    
                     <td class="text-center">
                         @usuario.Direccion.Calle @usuario.Direccion.NumeroInterior @usuario.Direccion.NumeroExterior @usuario.Direccion.Colonia.Nombre @usuario.Direccion.Colonia.CodigoPostal @usuario.Direccion.Colonia.Municipio.Nombre @usuario.Direccion.Colonia.Municipio.Estado.Nombre @usuario.Direccion.Colonia.Municipio.Estado.Pais.Nombre
                     </td>
